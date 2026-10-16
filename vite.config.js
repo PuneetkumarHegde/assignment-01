@@ -7,7 +7,8 @@ import { defineConfig } from 'vite'
 export const isProduction = process.env.NODE_ENV === 'production'
 
 // Set entry point for index.html, from arguments passed
-process.env.PUBLIC_ENTRY_POINT = process.argv[process.argv.length - 1]
+const entry = process.argv[process.argv.length - 1]
+process.env.PUBLIC_ENTRY_POINT = entry && !entry.startsWith('/') ? `/${entry}` : entry
 
 const packageAlias = [
   { find: '@', replacement: fileURLToPath(new URL(`src/`, import.meta.url)) },
